@@ -123,6 +123,15 @@ public class MainActivity extends Activity {
         }
     }
 
+    public void xmlObjectAnimator(View view) {
+        xmlAnimator(tvAnimator, R.animator.anim__object);
+    }
+
+    public void xmlSetAnimator(View view) {
+        xmlAnimator(tvAnimator, R.animator.anim_set);
+
+    }
+
 
     private Animator xmlAnimator(View targetView, int anim) {
         Animator animator = AnimatorInflater.loadAnimator(MainActivity.this, anim);
