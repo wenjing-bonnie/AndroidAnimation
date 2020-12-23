@@ -1,6 +1,7 @@
 package com.android.animation;
 
 import android.animation.Animator;
+import android.animation.AnimatorInflater;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
@@ -32,6 +33,7 @@ public class MainActivity extends Activity {
             public void onAnimationUpdate(ValueAnimator animation) {
                 int value = (int) animation.getAnimatedValue();
                 Log.d(TAG, "value = " + value);
+                tvAnimator.setText("第一个按钮对应的动画的value的变化为：" + value);
             }
         });
         //animator.setDuration(1000);
@@ -64,7 +66,17 @@ public class MainActivity extends Activity {
         set.play(alphaAnim).before(transXAnim).after(rotateAnim);
         set.setDuration(5000);
         set.start();
+        set.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+            }
 
+            @Override
+            public void onAnimationStart(Animator animation) {
+                super.onAnimationStart(animation);
+            }
+        });
         set.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationCancel(Animator animation) {
@@ -96,6 +108,26 @@ public class MainActivity extends Activity {
                 super.onAnimationResume(animation);
             }
         });
+    }
 
+    public void xmlValueAnimator(View view) {
+        Animator animator = xmlAnimator(view, R.animator.anim__value);
+        if (animator instanceof ValueAnimator) {
+            ((ValueAnimator) animator).addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                @Override
+                public void onAnimationUpdate(ValueAnimator animation) {
+                    Log.d(TAG, "value = " + animation.getAnimatedValue());
+                    tvAnimator.setText("第5个按钮对应的动画的value的变化为：" + animation.getAnimatedValue().toString());
+                }
+            });
+        }
+    }
+
+
+    private Animator xmlAnimator(View targetView, int anim) {
+        Animator animator = AnimatorInflater.loadAnimator(MainActivity.this, anim);
+        animator.setTarget(targetView);
+        animator.start();
+        return animator;
     }
 }
