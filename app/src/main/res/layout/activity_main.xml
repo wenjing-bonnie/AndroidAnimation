@@ -1,62 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".MainActivity">
+    android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/tv_animator"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="200px"
-        android:layout_marginBottom="200px"
-        android:background="@android:color/holo_purple"
-        android:text="测试动画"
-        android:textColor="@color/design_default_color_secondary" />
-
-    <Button
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="valueAnimator"
-        android:text="测试ValueAnimator" />
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="objectAnimator"
-        android:text="测试ObjectAnimator" />
+        <TextView
+            android:id="@+id/tv_animator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="200px"
+            android:layout_marginBottom="200px"
+            android:background="@android:color/holo_purple"
+            android:text="测试动画"
+            android:textColor="@color/design_default_color_secondary" />
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="objectAnimatorBackground"
-        android:text="测试下修改background属性值" />
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="valueAnimator"
+            android:text="测试ValueAnimator" />
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="objectAnimatorSet"
-        android:text="测试objectAnimatorSet" />
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="objectAnimator"
+            android:text="测试ObjectAnimator" />
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="xmlValueAnimator"
-        android:text="测试xml的ValueAnimator" />
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="objectAnimatorBackground"
+            android:text="测试下修改background属性值" />
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="xmlObjectAnimator"
-        android:text="测试xml的ObjectAnimator" />
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="objectAnimatorSet"
+            android:text="测试objectAnimatorSet" />
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="xmlSetAnimator"
-        android:text="测试xml的set" />
-</LinearLayout>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="xmlValueAnimator"
+            android:text="测试xml的ValueAnimator" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="xmlObjectAnimator"
+            android:text="测试xml的ObjectAnimator" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="xmlSetAnimator"
+            android:text="测试xml的set" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="测试自定义TypeEvaluator"
+            android:onClick="valueTypeEvaluator"/>
+    </LinearLayout>
+
+</ScrollView>

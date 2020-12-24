@@ -13,6 +13,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
+import com.android.animation.point.Point;
+import com.android.animation.point.PointEvaluator;
+
 public class MainActivity extends Activity {
     private final String TAG = "MainActivity";
     private TextView tvAnimator;
@@ -39,7 +42,6 @@ public class MainActivity extends Activity {
         //animator.setDuration(1000);
         //animator.setRepeatMode(ValueAnimator.RESTART);
         animator.start();
-
     }
 
     public void objectAnimator(View view) {
@@ -129,12 +131,28 @@ public class MainActivity extends Activity {
 
     public void xmlSetAnimator(View view) {
         xmlAnimator(tvAnimator, R.animator.anim_set);
-
     }
 
 
+    public void valueTypeEvaluator(View view) {
+        Point start = new Point(0, 0);
+        Point end = new Point(300, 300);
+        ValueAnimator animator = ValueAnimator.ofObject(new PointEvaluator(), start, end);
+        animator.setDuration(4000);
+        animator.start();
+        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                Point point = (Point) animation.getAnimatedValue();
+                tvAnimator.setText(String.format("The Point Type Evaluator x = %.2f y = %.2f", point.getX(), point.getY()));
+            }
+        });
+    }
+
     private Animator xmlAnimator(View targetView, int anim) {
+        //加载xml文件
         Animator animator = AnimatorInflater.loadAnimator(MainActivity.this, anim);
+        //将该动画加载到对应的view
         animator.setTarget(targetView);
         animator.start();
         return animator;
