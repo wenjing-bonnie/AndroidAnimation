@@ -1,5 +1,7 @@
 package com.android.animation.point;
 
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Canvas;
@@ -54,8 +56,8 @@ public class PointView extends View {
         Point end = new Point(getDisplayWidth(), getDisplayHeight());
         Point middle = new Point(end.getX() / 2, end.getY() / 2);
         ValueAnimator animator = ValueAnimator.ofObject(new PointEvaluator(), start, end, middle);
-        animator.setDuration(3000);
-        animator.start();
+        //animator.setDuration(3000);
+        //animator.start();
         animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
@@ -65,6 +67,15 @@ public class PointView extends View {
                 invalidate();
             }
         });
+
+        ObjectAnimator colorAnimator = ObjectAnimator.ofArgb(paint, "color", Color.RED, Color.GREEN);
+        //colorAnimator.setDuration(3000);
+
+        AnimatorSet set = new AnimatorSet();
+        set.setDuration(7000);
+        set.play(animator).with(colorAnimator);
+        set.start();
+
     }
 
     private int getDisplayHeight() {
