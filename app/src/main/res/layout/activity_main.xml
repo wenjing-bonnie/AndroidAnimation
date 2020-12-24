@@ -64,8 +64,14 @@
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="测试自定义TypeEvaluator"
-            android:onClick="valueTypeEvaluator"/>
+            android:onClick="valueTypeEvaluator"
+            android:text="测试自定义TypeEvaluator" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="进入到另外一个页面测试自定义View中的动画"
+            android:onClick="goPointActivity"/>
     </LinearLayout>
 
 </ScrollView>

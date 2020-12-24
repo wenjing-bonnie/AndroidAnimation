@@ -4,6 +4,7 @@ import android.animation.TypeEvaluator;
 
 /**
  * Created by wenjing.liu on 2020/12/24 in J1.
+ * 自定义的TypeEvaluator用来实现Point从起始位置过渡到终点位置
  *
  * @author wenjing.liu
  */

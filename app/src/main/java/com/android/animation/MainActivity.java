@@ -7,6 +7,7 @@ import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,6 +15,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.android.animation.point.Point;
+import com.android.animation.point.PointActivity;
 import com.android.animation.point.PointEvaluator;
 
 public class MainActivity extends Activity {
@@ -147,6 +149,11 @@ public class MainActivity extends Activity {
                 tvAnimator.setText(String.format("The Point Type Evaluator x = %.2f y = %.2f", point.getX(), point.getY()));
             }
         });
+    }
+
+    public void goPointActivity(View view) {
+        Intent intent = new Intent(MainActivity.this, PointActivity.class);
+        startActivity(intent);
     }
 
     private Animator xmlAnimator(View targetView, int anim) {
