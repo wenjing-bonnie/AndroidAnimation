@@ -15,7 +15,8 @@ public class PointEvaluator implements TypeEvaluator {
         Point start = (Point) startValue;
         Point end = (Point) endValue;
         float x = start.getX() + fraction * (end.getX() - start.getX());
-        float y = start.getY() + fraction * (end.getY() - start.getY());
+        // float y = start.getY() + fraction * (end.getY() - start.getY());
+        float y = (float) (Math.sin(x * Math.PI / 180) * 100) + end.getY();
         Point result = new Point(x, y);
         return result;
     }

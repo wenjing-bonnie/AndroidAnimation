@@ -41,8 +41,6 @@ public class MainActivity extends Activity {
                 tvAnimator.setText("第一个按钮对应的动画的value的变化为：" + value);
             }
         });
-        //animator.setDuration(1000);
-        //animator.setRepeatMode(ValueAnimator.RESTART);
         animator.start();
     }
 
