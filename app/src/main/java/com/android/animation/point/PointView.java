@@ -14,6 +14,7 @@ import android.view.animation.AnticipateInterpolator;
 import android.view.animation.BounceInterpolator;
 import android.view.animation.CycleInterpolator;
 import android.view.animation.LinearInterpolator;
+import android.widget.GridLayout;
 
 import androidx.annotation.Nullable;
 
@@ -25,11 +26,10 @@ import androidx.annotation.Nullable;
  */
 public class PointView extends View {
 
-    Paint paint;
-    float cx;
-    float cy;
-    ;
-    Paint linePaint;
+    private Paint paint;
+    private Paint linePaint;
+    private float cx;
+    private float cy;
 
     public PointView(Context context) {
         this(context, null);
@@ -40,6 +40,12 @@ public class PointView extends View {
         initView(context, attrs);
     }
 
+    /**
+     * 初始化View
+     *
+     * @param context
+     * @param attrs
+     */
     private void initView(Context context, @Nullable AttributeSet attrs) {
         setBackgroundColor(Color.LTGRAY);
         paint = new Paint();
@@ -52,15 +58,56 @@ public class PointView extends View {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        int width = getDisplayWidth();
-        int height = getDisplayHeight();
-        setMeasuredDimension(width, height);
 
+        int width = getMeasureWidth(widthMeasureSpec);
+        int height = getMeasureHeight(heightMeasureSpec);
+        setMeasuredDimension(width, height);
+    }
+
+    /**
+     * 获取到控件的width
+     *
+     * @param widthMeasureSpec
+     * @return
+     */
+    private int getMeasureWidth(int widthMeasureSpec) {
+        int width;
+        int mode = MeasureSpec.getMode(widthMeasureSpec);
+        int size = MeasureSpec.getSize(widthMeasureSpec);
+        switch (mode) {
+            case MeasureSpec.UNSPECIFIED:
+                width = getDisplayWidth();
+                break;
+            default:
+                width = size;
+        }
+        return width;
+    }
+
+    /**
+     * 获取到控件的height
+     *
+     * @param heightMeasureSpec
+     * @return
+     */
+    private int getMeasureHeight(int heightMeasureSpec) {
+        int height;
+        int mode = MeasureSpec.getMode(heightMeasureSpec);
+        int size = MeasureSpec.getSize(heightMeasureSpec);
+        switch (mode) {
+            case MeasureSpec.UNSPECIFIED:
+                height = getDisplayHeight();
+                break;
+            default:
+                height = size;
+        }
+        return height;
     }
 
     @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
         super.onLayout(changed, left, top, right, bottom);
+        //已经完成控件的放置的时候，启动动画
         startAnimation();
     }
 
@@ -71,27 +118,40 @@ public class PointView extends View {
         drawDot(canvas, cx, cy);
     }
 
+    /**
+     * 画坐标系
+     *
+     * @param canvas
+     */
     private void drawLine(Canvas canvas) {
         int lineHeight = getMeasuredHeight() / 2;
         canvas.drawLine(0, lineHeight, getMeasuredWidth(), lineHeight, linePaint);
         canvas.drawLine(0, lineHeight - 50, 0, lineHeight + 50, linePaint);
     }
 
+    /**
+     * 画原点
+     *
+     * @param canvas
+     * @param cx
+     * @param cy
+     */
     private void drawDot(Canvas canvas, float cx, float cy) {
         canvas.drawCircle(cx, cy, 30, paint);
     }
 
+    /**
+     * 启动动画
+     */
     private void startAnimation() {
         int width = getMeasuredWidth();
         int height = getMeasuredHeight();
-        //Log.d("PointView", "width = " + width + " , height = " + height);
-        //在屏幕的中间位置让点按照正弦曲线移动
+        //Log.v("PointView", "width = " + width + " , height = " + height);
+        //1.在屏幕的中间位置让点按照正弦曲线移动
         Point start = new Point(0, height / 2);
         Point end = new Point(width, height / 2);
         Point middle = new Point(width / 2, height / 2);
         ValueAnimator dotAnim = ValueAnimator.ofObject(new PointEvaluator(), start, end, middle);
-        //animator.setDuration(3000);
-        //animator.start();
         dotAnim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
@@ -103,17 +163,19 @@ public class PointView extends View {
             }
         });
 
-        //坐标轴的颜色属性动画
+        //2.坐标轴的颜色属性动画
         ObjectAnimator colorAnimator = ObjectAnimator.ofArgb(paint, "color", Color.RED, Color.GREEN);
-        //colorAnimator.setDuration(3000);
         ObjectAnimator lineColorAnimator = ObjectAnimator.ofArgb(linePaint, "color", Color.BLUE, Color.RED);
 
-        //所有的动画
+        //3. 多个动画一起播放：
         AnimatorSet set = new AnimatorSet();
         set.setDuration(7000);
-        //set.play(dotAnim).with(colorAnimator).with(lineColorAnimator);
-        set.playTogether(dotAnim, colorAnimator, lineColorAnimator);
         //set.setInterpolator(new LinearInterpolator());
+        //(1)方法一
+        //set.play(dotAnim).with(colorAnimator).with(lineColorAnimator);
+        //set.start();
+        //(2)方法二
+        set.playTogether(dotAnim, colorAnimator, lineColorAnimator);
         set.start();
 
     }
