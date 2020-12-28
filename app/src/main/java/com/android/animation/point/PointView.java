@@ -1,5 +1,7 @@
 package com.android.animation.point;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
@@ -10,11 +12,6 @@ import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
-import android.view.animation.AnticipateInterpolator;
-import android.view.animation.BounceInterpolator;
-import android.view.animation.CycleInterpolator;
-import android.view.animation.LinearInterpolator;
-import android.widget.GridLayout;
 
 import androidx.annotation.Nullable;
 
@@ -176,6 +173,36 @@ public class PointView extends View {
         //set.start();
         //(2)方法二
         set.playTogether(dotAnim, colorAnimator, lineColorAnimator);
+
+        set.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+                Log.d("PointView", "onAnimationStart = " + animation);
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                Log.v("PointView", "onAnimationEnd = " + animation);
+
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+
+            }
+        });
+        set.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+            }
+        });
+
         set.start();
 
     }

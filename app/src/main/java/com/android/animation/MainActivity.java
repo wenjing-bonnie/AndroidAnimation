@@ -54,7 +54,6 @@ public class MainActivity extends Activity {
         ObjectAnimator animator = ObjectAnimator.ofArgb(tvAnimator, "backgroundColor", Color.RED, Color.YELLOW);
         animator.setDuration(3000);
         animator.start();
-
     }
 
 
